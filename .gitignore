@@ -1,0 +1,7 @@
+*.code-workspace
+bin/*
+!bin/data/
+# bin/data/*
+# !bin/data/pd
+.vscode/*
+obj/*
