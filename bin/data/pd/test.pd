@@ -3,8 +3,7 @@
 #N canvas 369 98 675 256 test 0;
 #N canvas 0 22 450 300 (subpatch) 0;
 #X array array1 10 float 3;
-#A 0 0.0857145 0.328572 0.500001 0.57143 0.514287 0.47143 0.357144
-0.285715 0.057143 0;
+#A 0 0.0857145 0.328572 0.500001 0.57143 0.514287 0.47143 0.357144 0.285715 0.057143 0;
 #X coords 0 1 9 -1 200 140 1;
 #X restore 425 58 graph;
 #X obj 133 169 tabread array1;
@@ -85,27 +84,47 @@
 #X connect 24 0 3 0;
 #X connect 25 0 7 0;
 #X restore 61 207 pd test midi;
-#N canvas 0 22 161 223 sines 0;
+#N canvas 150 187 681 556 sines 1;
 #X obj 53 110 osc~ 400;
 #X obj 53 84 +~ 400;
 #X obj 53 34 osc~ 1;
 #X obj 53 61 *~ 150;
-#X obj 53 137 *~ 0.2;
-#X obj 53 167 outlet~;
-#X connect 0 0 4 0;
+#X obj 124 206 *~ 0.2;
+#X obj 122 244 outlet~;
+#X obj 125 175 +~;
+#X obj 125 107 +~;
+#X obj 280 102 +~;
+#X obj 280 49 osc~ 440;
+#X obj 125 54 osc~ 330;
+#X obj 146 78 osc~ 330.2;
+#X obj 301 72 osc~ 440.33;
+#X obj 435 99 +~;
+#X obj 436 49 osc~ 587;
+#X obj 457 72 osc~ 587.25;
+#X obj 126 144 +~;
 #X connect 1 0 0 0;
 #X connect 2 0 3 0;
 #X connect 3 0 1 0;
 #X connect 4 0 5 0;
+#X connect 6 0 4 0;
+#X connect 7 0 16 0;
+#X connect 8 0 16 1;
+#X connect 9 0 8 0;
+#X connect 10 0 7 0;
+#X connect 11 0 7 1;
+#X connect 12 0 8 1;
+#X connect 13 0 6 1;
+#X connect 14 0 13 0;
+#X connect 15 0 13 1;
+#X connect 16 0 6 0;
 #X restore 272 193 pd sines;
-#N canvas 508 242 260 393 tone 0;
+#N canvas 964 336 260 393 tone 0;
 #X obj 99 244 line~;
 #X obj 3 296 *~;
 #X obj 3 18 r tone;
 #X obj 3 123 mtof;
 #X obj 118 145 t b b;
-#X obj 118 120 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
+#X obj 118 120 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000;
 #X msg 99 192 1 50;
 #X obj 153 174 delay 100;
 #X msg 69 53 pitch 60;
@@ -122,8 +141,8 @@
 #X obj 3 201 -~ 0.5;
 #X obj 3 225 *~ 2;
 #X text 11 183 make saw;
-#X connect 0 0 1 1;
 #X connect 0 0 9 0;
+#X connect 0 0 1 1;
 #X connect 1 0 14 0;
 #X connect 2 0 12 0;
 #X connect 3 0 15 0;
@@ -150,7 +169,7 @@
 #X obj 27 22 r fromOF;
 #X obj 98 53 print PD;
 #X msg 27 109 bang;
-#N canvas 0 22 334 183 patch 0;
+#N canvas 63 100 334 183 patch 0;
 #X obj 38 73 \$0;
 #X msg 38 103 PATCH OPENED: \$1;
 #X obj 38 42 loadbang;
@@ -167,7 +186,7 @@
 #X restore 279 105 pd patch open close;
 #X obj 27 52 list trim;
 #X obj 27 81 route test;
-#N canvas 0 22 907 194 midi 0;
+#N canvas 121 158 907 194 midi 0;
 #X obj 23 21 notein;
 #X obj 23 55 pack f f f;
 #X obj 134 55 pack f f f;
@@ -230,7 +249,7 @@
 #X connect 24 0 13 0;
 #X connect 25 0 13 0;
 #X restore 279 134 pd midi in;
-#N canvas 0 22 788 194 test 0;
+#N canvas 92 129 788 194 test 0;
 #X obj 185 160 s toOF;
 #X obj 185 120 f 100;
 #X obj 237 120 symbol kaaa;
@@ -273,12 +292,9 @@
 #X obj 205 166 adc~;
 #N canvas 742 363 375 145 license 0;
 #X text 8 15 Copyright (c) 2011 Dan Wilcox <danomatika@gmail.com>;
-#X text 10 64 For information on usage and redistribution \, and for
-a DISCLAIMER OF ALL WARRANTIES \, see the file \, "LICENSE.txt \, "
-in this distribution.;
+#X text 10 64 For information on usage and redistribution \, and for a DISCLAIMER OF ALL WARRANTIES \, see the file \, "LICENSE.txt \, " in this distribution.;
 #X text 9 40 BSD Simplified License;
-#X text 10 116 See https://github.com/danomatika/ofxPd for documentation
-;
+#X text 10 116 See https://github.com/danomatika/ofxPd for documentation;
 #X restore 28 316 pd license;
 #X text 255 317 Dan Wilcox 2011 BSD;
 #X obj 27 139 t b b b b;
