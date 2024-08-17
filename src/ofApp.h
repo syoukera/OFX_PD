@@ -62,4 +62,6 @@ class ofApp : public ofBaseApp, public PdReceiver, public PdMidiReceiver {
 		std::vector<Patch> instances;
 		
 		int midiChan;
+
+		double noise;
 };

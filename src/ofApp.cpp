@@ -268,7 +268,8 @@ void ofApp::update() {
 
 	// send MIDI note by setting noise
 	auto now = ofGetCurrentTime();
-	double pitch = (2.0*ofNoise(now.getAsSeconds())+1.0)*60;
+	noise = 2.0*ofNoise(now.getAsSeconds())+1.0; // normarized to 0 - 2 value
+	double pitch = noise*60;
 	pd.sendNoteOn(midiChan, pitch);
 }
 
@@ -284,6 +285,14 @@ void ofApp::draw() {
 		ofDrawLine(x, y+scopeArray[i]*h, x+w, y+scopeArray[i+1]*h);
 		x += w;
 	}
+
+	// draw rectangle
+    ofRectangle rect;
+    rect.x = ofGetWidth()/2.0;
+    rect.y = noise*ofGetHeight()/4.0;
+    rect.width = 100;
+    rect.height = 100;
+    ofDrawRectangle(rect);
 }
 
 //--------------------------------------------------------------
