@@ -97,149 +97,149 @@ void ofApp::setup() {
 	std::cout << "FINISH Patch Test" << std::endl;
 
 	// -----------------------------------------------------
-	std::cout << std::endl << "BEGIN Message Test" << std::endl;
+	// std::cout << std::endl << "BEGIN Message Test" << std::endl;
 
-	// test basic atoms
-	pd.sendBang("fromOF");
-	pd.sendFloat("fromOF", 100);
-	pd.sendSymbol("fromOF", "test string");
+	// // test basic atoms
+	// pd.sendBang("fromOF");
+	// pd.sendFloat("fromOF", 100);
+	// pd.sendSymbol("fromOF", "test string");
 
-	// stream interface
-	pd << Bang("fromOF")
-	   << Float("fromOF", 100)
-	   << Symbol("fromOF", "test string");
+	// // stream interface
+	// pd << Bang("fromOF")
+	//    << Float("fromOF", 100)
+	//    << Symbol("fromOF", "test string");
 
-	// send a list
-	pd.startMessage();
-	pd.addFloat(1.23);
-	pd.addSymbol("a symbol");
-	pd.finishList("fromOF");
+	// // send a list
+	// pd.startMessage();
+	// pd.addFloat(1.23);
+	// pd.addSymbol("a symbol");
+	// pd.finishList("fromOF");
 
-	// send a message to the $0 receiver ie. $0-fromOF
-	pd.startMessage();
-	pd.addFloat(1.23);
-	pd.addSymbol("a symbol");
-	pd.finishList(patch.dollarZeroStr()+"-fromOF");
+	// // send a message to the $0 receiver ie. $0-fromOF
+	// pd.startMessage();
+	// pd.addFloat(1.23);
+	// pd.addSymbol("a symbol");
+	// pd.finishList(patch.dollarZeroStr()+"-fromOF");
 
-	// send a list using the List object
-	List testList;
-	testList.addFloat(1.23);
-	testList.addSymbol("sent from a List object");
-	pd.sendList("fromOF", testList);
-	pd.sendMessage("fromOF", "msg", testList);
+	// // send a list using the List object
+	// List testList;
+	// testList.addFloat(1.23);
+	// testList.addSymbol("sent from a List object");
+	// pd.sendList("fromOF", testList);
+	// pd.sendMessage("fromOF", "msg", testList);
 
-	// stream interface for list
-	pd << StartMessage() << 1.23 << "sent from a streamed list" << FinishList("fromOF");
+	// // stream interface for list
+	// pd << StartMessage() << 1.23 << "sent from a streamed list" << FinishList("fromOF");
 
-	std::cout << "FINISH Message Test" << std::endl;
-
-	// -----------------------------------------------------
-	std::cout << std::endl << "BEGIN MIDI Test" << std::endl;
-
-	// send functions
-	pd.sendNoteOn(midiChan, 60);
-	pd.sendControlChange(midiChan, 0, 64);
-	pd.sendProgramChange(midiChan, 100); // note: pgm num range is 1 - 128
-	pd.sendPitchBend(midiChan, 2000);    // note: ofxPd uses -8192 - 8192 while [bendin] returns 0 - 16383,
-										 // so sending a val of 2000 gives 10192 in pd
-	pd.sendAftertouch(midiChan, 100);
-	pd.sendPolyAftertouch(midiChan, 64, 100);
-	pd.sendMidiByte(0, 239);    // note: pd adds +2 to the port number from [midiin], [sysexin], & [realtimein]
-	pd.sendSysex(0, 239);       // so sending to port 0 gives port 2 in pd
-	pd.sendSysRealTime(0, 239);
-
-	// stream
-	pd << NoteOn(midiChan, 60) << ControlChange(midiChan, 100, 64)
-	   << ProgramChange(midiChan, 100) << PitchBend(midiChan, 2000)
-	   << Aftertouch(midiChan, 100) << PolyAftertouch(midiChan, 64, 100)
-	   << StartMidi(0) << 239 << Finish()
-	   << StartSysex(0) << 239 << Finish()
-	   << StartSysRealTime(0) << 239 << Finish();
-
-	std::cout << "FINISH MIDI Test" << std::endl;
+	// std::cout << "FINISH Message Test" << std::endl;
 
 	// -----------------------------------------------------
-	std::cout << std::endl << "BEGIN Array Test" << std::endl;
+	// std::cout << std::endl << "BEGIN MIDI Test" << std::endl;
 
-	// array check length
-	std::cout << "array1 len: " << pd.arraySize("array1") << std::endl;
+	// // send functions
+	// pd.sendNoteOn(midiChan, 60);
+	// pd.sendControlChange(midiChan, 0, 64);
+	// pd.sendProgramChange(midiChan, 100); // note: pgm num range is 1 - 128
+	// pd.sendPitchBend(midiChan, 2000);    // note: ofxPd uses -8192 - 8192 while [bendin] returns 0 - 16383,
+	// 									 // so sending a val of 2000 gives 10192 in pd
+	// pd.sendAftertouch(midiChan, 100);
+	// pd.sendPolyAftertouch(midiChan, 64, 100);
+	// pd.sendMidiByte(0, 239);    // note: pd adds +2 to the port number from [midiin], [sysexin], & [realtimein]
+	// pd.sendSysex(0, 239);       // so sending to port 0 gives port 2 in pd
+	// pd.sendSysRealTime(0, 239);
 
-	// read array
-	std::vector<float> array1;
-	pd.readArray("array1", array1);	// sets array to correct size
-	std::cout << "array1 ";
-	for(int i = 0; i < array1.size(); ++i) {
-		std::cout << array1[i] << " ";
-	}
-	std::cout << std::endl;
+	// // stream
+	// pd << NoteOn(midiChan, 60) << ControlChange(midiChan, 100, 64)
+	//    << ProgramChange(midiChan, 100) << PitchBend(midiChan, 2000)
+	//    << Aftertouch(midiChan, 100) << PolyAftertouch(midiChan, 64, 100)
+	//    << StartMidi(0) << 239 << Finish()
+	//    << StartSysex(0) << 239 << Finish()
+	//    << StartSysRealTime(0) << 239 << Finish();
 
-	// write array
-	for(int i = 0; i < array1.size(); ++i) {
-		array1[i] = i;
-	}
-	pd.writeArray("array1", array1);
-
-	// ready array
-	pd.readArray("array1", array1);
-	std::cout << "array1 ";
-	for(int i = 0; i < array1.size(); ++i) {
-		std::cout << array1[i] << " ";
-	}
-	std::cout << std::endl;
-
-	// clear array
-	pd.clearArray("array1", 10);
-
-	// ready array
-	pd.readArray("array1", array1);
-	std::cout << "array1 ";
-	for(int i = 0; i < array1.size(); ++i) {
-		std::cout << array1[i] << " ";
-	}
-	std::cout << std::endl;
-
-	std::cout << "FINISH Array Test" << std::endl;
+	// std::cout << "FINISH MIDI Test" << std::endl;
 
 	// -----------------------------------------------------
-	std::cout << std::endl << "BEGIN PD Test" << std::endl;
+	// std::cout << std::endl << "BEGIN Array Test" << std::endl;
 
-	pd.sendSymbol("fromOF", "test");
+	// // array check length
+	// std::cout << "array1 len: " << pd.arraySize("array1") << std::endl;
 
-	std::cout << "FINISH PD Test" << std::endl;
+	// // read array
+	// std::vector<float> array1;
+	// pd.readArray("array1", array1);	// sets array to correct size
+	// std::cout << "array1 ";
+	// for(int i = 0; i < array1.size(); ++i) {
+	// 	std::cout << array1[i] << " ";
+	// }
+	// std::cout << std::endl;
+
+	// // write array
+	// for(int i = 0; i < array1.size(); ++i) {
+	// 	array1[i] = i;
+	// }
+	// pd.writeArray("array1", array1);
+
+	// // ready array
+	// pd.readArray("array1", array1);
+	// std::cout << "array1 ";
+	// for(int i = 0; i < array1.size(); ++i) {
+	// 	std::cout << array1[i] << " ";
+	// }
+	// std::cout << std::endl;
+
+	// // clear array
+	// pd.clearArray("array1", 10);
+
+	// // ready array
+	// pd.readArray("array1", array1);
+	// std::cout << "array1 ";
+	// for(int i = 0; i < array1.size(); ++i) {
+	// 	std::cout << array1[i] << " ";
+	// }
+	// std::cout << std::endl;
+
+	// std::cout << "FINISH Array Test" << std::endl;
 
 	// -----------------------------------------------------
-	std::cout << std::endl << "BEGIN Instance Test" << std::endl;
+	// std::cout << std::endl << "BEGIN PD Test" << std::endl;
 
-	// open 10 instances
-	for(int i = 0; i < 10; ++i) {
-		Patch p = pd.openPatch("pd/instance.pd");
-		instances.push_back(p);
-	}
+	// pd.sendSymbol("fromOF", "test");
 
-	// send a hello bang to each instance individually using the dollarZero
-	// to [r $0-instance] which should print the instance dollarZero unique id
-	// and a unique random number
-	for(int i = 0; i < instances.size(); ++i) {
-		pd.sendBang(instances[i].dollarZeroStr()+"-instance");
-	}
+	// std::cout << "FINISH PD Test" << std::endl;
 
-	// send a random float between 0 and 100
-	for(int i = 0; i < instances.size(); ++i) {
-		pd.sendFloat(instances[i].dollarZeroStr()+"-instance", int(ofRandom(0, 100)));
-	}
+	// -----------------------------------------------------
+	// std::cout << std::endl << "BEGIN Instance Test" << std::endl;
 
-	// send a symbol
-	for(int i = 0; i < instances.size(); ++i) {
-		pd.sendSymbol(instances[i].dollarZeroStr()+"-instance", "howdy dude");
-	}
+	// // open 10 instances
+	// for(int i = 0; i < 10; ++i) {
+	// 	Patch p = pd.openPatch("pd/instance.pd");
+	// 	instances.push_back(p);
+	// }
 
-	// close all instances
-	for(int i = 0; i < instances.size(); ++i) {
-		pd.closePatch(instances[i]);
-	}
-	instances.clear();
+	// // send a hello bang to each instance individually using the dollarZero
+	// // to [r $0-instance] which should print the instance dollarZero unique id
+	// // and a unique random number
+	// for(int i = 0; i < instances.size(); ++i) {
+	// 	pd.sendBang(instances[i].dollarZeroStr()+"-instance");
+	// }
 
-	std::cout << "FINISH Instance Test" << std::endl;
+	// // send a random float between 0 and 100
+	// for(int i = 0; i < instances.size(); ++i) {
+	// 	pd.sendFloat(instances[i].dollarZeroStr()+"-instance", int(ofRandom(0, 100)));
+	// }
+
+	// // send a symbol
+	// for(int i = 0; i < instances.size(); ++i) {
+	// 	pd.sendSymbol(instances[i].dollarZeroStr()+"-instance", "howdy dude");
+	// }
+
+	// // close all instances
+	// for(int i = 0; i < instances.size(); ++i) {
+	// 	pd.closePatch(instances[i]);
+	// }
+	// instances.clear();
+
+	// std::cout << "FINISH Instance Test" << std::endl;
 
 	// -----------------------------------------------------
 	// play a tone by sending a list
