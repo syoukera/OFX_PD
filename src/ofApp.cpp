@@ -265,6 +265,11 @@ void ofApp::update() {
 
 	// update scope array from pd
 	pd.readArray("scope", scopeArray);
+
+	// send MIDI note by setting noise
+	auto now = ofGetCurrentTime();
+	double pitch = (2.0*ofNoise(now.getAsSeconds())+1.0)*60;
+	pd.sendNoteOn(midiChan, pitch);
 }
 
 //--------------------------------------------------------------
