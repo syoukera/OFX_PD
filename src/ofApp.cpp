@@ -134,29 +134,29 @@ void ofApp::setup() {
 	// std::cout << "FINISH Message Test" << std::endl;
 
 	// -----------------------------------------------------
-	// std::cout << std::endl << "BEGIN MIDI Test" << std::endl;
+	std::cout << std::endl << "BEGIN MIDI Test" << std::endl;
 
-	// // send functions
-	// pd.sendNoteOn(midiChan, 60);
-	// pd.sendControlChange(midiChan, 0, 64);
-	// pd.sendProgramChange(midiChan, 100); // note: pgm num range is 1 - 128
-	// pd.sendPitchBend(midiChan, 2000);    // note: ofxPd uses -8192 - 8192 while [bendin] returns 0 - 16383,
-	// 									 // so sending a val of 2000 gives 10192 in pd
-	// pd.sendAftertouch(midiChan, 100);
-	// pd.sendPolyAftertouch(midiChan, 64, 100);
-	// pd.sendMidiByte(0, 239);    // note: pd adds +2 to the port number from [midiin], [sysexin], & [realtimein]
-	// pd.sendSysex(0, 239);       // so sending to port 0 gives port 2 in pd
-	// pd.sendSysRealTime(0, 239);
+	// send functions
+	pd.sendNoteOn(midiChan, 60);
+	pd.sendControlChange(midiChan, 0, 64);
+	pd.sendProgramChange(midiChan, 100); // note: pgm num range is 1 - 128
+	pd.sendPitchBend(midiChan, 2000);    // note: ofxPd uses -8192 - 8192 while [bendin] returns 0 - 16383,
+										 // so sending a val of 2000 gives 10192 in pd
+	pd.sendAftertouch(midiChan, 100);
+	pd.sendPolyAftertouch(midiChan, 64, 100);
+	pd.sendMidiByte(0, 239);    // note: pd adds +2 to the port number from [midiin], [sysexin], & [realtimein]
+	pd.sendSysex(0, 239);       // so sending to port 0 gives port 2 in pd
+	pd.sendSysRealTime(0, 239);
 
-	// // stream
-	// pd << NoteOn(midiChan, 60) << ControlChange(midiChan, 100, 64)
-	//    << ProgramChange(midiChan, 100) << PitchBend(midiChan, 2000)
-	//    << Aftertouch(midiChan, 100) << PolyAftertouch(midiChan, 64, 100)
-	//    << StartMidi(0) << 239 << Finish()
-	//    << StartSysex(0) << 239 << Finish()
-	//    << StartSysRealTime(0) << 239 << Finish();
+	// stream
+	pd << NoteOn(midiChan, 60) << ControlChange(midiChan, 100, 64)
+	   << ProgramChange(midiChan, 100) << PitchBend(midiChan, 2000)
+	   << Aftertouch(midiChan, 100) << PolyAftertouch(midiChan, 64, 100)
+	   << StartMidi(0) << 239 << Finish()
+	   << StartSysex(0) << 239 << Finish()
+	   << StartSysRealTime(0) << 239 << Finish();
 
-	// std::cout << "FINISH MIDI Test" << std::endl;
+	std::cout << "FINISH MIDI Test" << std::endl;
 
 	// -----------------------------------------------------
 	// std::cout << std::endl << "BEGIN Array Test" << std::endl;
@@ -290,7 +290,9 @@ void ofApp::exit() {
 
 //--------------------------------------------------------------
 void ofApp::playTone(int pitch) {
-	pd << StartMessage() << "pitch" << pitch << FinishList("tone") << Bang("tone");
+	// pd << StartMessage() << "pitch" << pitch << FinishList("tone") << Bang("tone");
+	pd.sendNoteOn(midiChan, pitch);
+
 }
 
 //--------------------------------------------------------------
