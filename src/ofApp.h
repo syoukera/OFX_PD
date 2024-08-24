@@ -64,4 +64,7 @@ class ofApp : public ofBaseApp, public PdReceiver, public PdMidiReceiver {
 		int midiChan;
 
 		double noise;
+		double angle;
+
+		ofBoxPrimitive box;
 };

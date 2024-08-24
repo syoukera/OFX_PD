@@ -287,12 +287,21 @@ void ofApp::draw() {
 	}
 
 	// draw rectangle
-    ofRectangle rect;
-    rect.x = ofGetWidth()/2.0;
-    rect.y = noise*ofGetHeight()/4.0;
-    rect.width = 100;
-    rect.height = 100;
-    ofDrawRectangle(rect);
+	// ofNoFill();	
+    // ofRectangle rect;
+    // rect.x = ofGetWidth()/2.0;
+    // rect.y = noise*ofGetHeight()/4.0;
+    // rect.width = 100;
+    // rect.height = 100;
+    // ofDrawRectangle(rect);
+
+	// 立方体
+	box.set(100); // サイズ設定
+	box.setPosition(ofGetWidth()/2.0, noise*ofGetHeight()/4.0, 0); // 位置
+
+	glm::vec3 vec_rotate(1.0, 1.0, 0.0);
+	// box.drawWireframe(); // ワイヤーフレームを描画
+	box.draw();
 }
 
 //--------------------------------------------------------------
