@@ -249,6 +249,9 @@ void ofApp::setup() {
 	pd.addFloat(72);
 	pd.finishList("tone");
 	pd.sendBang("tone");
+
+    rotationSpeed = 1.0f;  // 回転速度を設定
+    currentAngle = 0.0f;   // 初期の回転角度を設定
 }
 
 //--------------------------------------------------------------
@@ -271,6 +274,8 @@ void ofApp::update() {
 	noise = 2.0*ofNoise(now.getAsSeconds())+1.0; // normarized to 0 - 2 value
 	double pitch = noise*60;
 	pd.sendNoteOn(midiChan, pitch);
+
+    currentAngle += rotationSpeed*noise;  // 回転角度を更新
 }
 
 //--------------------------------------------------------------
@@ -285,23 +290,12 @@ void ofApp::draw() {
 		ofDrawLine(x, y+scopeArray[i]*h, x+w, y+scopeArray[i+1]*h);
 		x += w;
 	}
-
-	// draw rectangle
-	// ofNoFill();	
-    // ofRectangle rect;
-    // rect.x = ofGetWidth()/2.0;
-    // rect.y = noise*ofGetHeight()/4.0;
-    // rect.width = 100;
-    // rect.height = 100;
-    // ofDrawRectangle(rect);
-
-	// 立方体
-	box.set(100); // サイズ設定
-	box.setPosition(ofGetWidth()/2.0, noise*ofGetHeight()/4.0, 0); // 位置
-
-	glm::vec3 vec_rotate(1.0, 1.0, 0.0);
-	// box.drawWireframe(); // ワイヤーフレームを描画
-	box.draw();
+	
+    ofPushMatrix();
+    ofTranslate(ofGetWidth() / 2, noise*ofGetHeight()/4.0, 0);  // 画面の中心に移動
+    ofRotateDeg(currentAngle, 1.0, 1.0, 0.0);  // 回転させる。軸はxとyの方向に設定
+    box.drawWireframe();  // ワイヤーフレームでボックスを描画
+    ofPopMatrix();
 }
 
 //--------------------------------------------------------------

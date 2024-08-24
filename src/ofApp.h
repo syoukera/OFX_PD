@@ -64,7 +64,10 @@ class ofApp : public ofBaseApp, public PdReceiver, public PdMidiReceiver {
 		int midiChan;
 
 		double noise;
-		double angle;
+
+		double rotationSpeed;  // 回転速度を設定
+		double currentAngle;   // 初期の回転角度を設定
+		// double angle;
 
 		ofBoxPrimitive box;
 };
