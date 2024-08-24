@@ -250,6 +250,7 @@ void ofApp::setup() {
 	pd.finishList("tone");
 	pd.sendBang("tone");
 
+	box.set(100);
     rotationSpeed = 1.0f;  // 回転速度を設定
     currentAngle = 0.0f;   // 初期の回転角度を設定
 }
@@ -290,7 +291,7 @@ void ofApp::draw() {
 		ofDrawLine(x, y+scopeArray[i]*h, x+w, y+scopeArray[i+1]*h);
 		x += w;
 	}
-	
+
     ofPushMatrix();
     ofTranslate(ofGetWidth() / 2, noise*ofGetHeight()/4.0, 0);  // 画面の中心に移動
     ofRotateDeg(currentAngle, 1.0, 1.0, 0.0);  // 回転させる。軸はxとyの方向に設定
