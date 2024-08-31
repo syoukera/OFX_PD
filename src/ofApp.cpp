@@ -321,8 +321,8 @@ void ofApp::exit() {
 
 //--------------------------------------------------------------
 void ofApp::playTone(int pitch) {
-	// pd << StartMessage() << "pitch" << pitch << FinishList("tone") << Bang("tone");
-	pd.sendNoteOn(midiChan, pitch);
+	pd << StartMessage() << "pitch" << pitch << FinishList("tone") << Bang("tone");
+	// pd.sendNoteOn(midiChan, pitch);
 
 }
 
@@ -397,7 +397,7 @@ void ofApp::mousePressed(int x, int y, int button){
         y > boxPosition.y - box.getHeight() / 2 && y < boxPosition.y + box.getHeight() / 2) {
 
         boxColor = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));  // ランダムな色に変更
-		playTone(72);
+		playTone(60 + ofRandom(12));
 
     }
 }
