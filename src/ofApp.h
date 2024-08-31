@@ -33,6 +33,7 @@ class ofApp : public ofBaseApp, public PdReceiver, public PdMidiReceiver {
 		
 		// input callbacks
 		void keyPressed(int key);
+		void mousePressed(int x, int y, int button);
 		
 		// audio callbacks
 		void audioIn(ofSoundBuffer &buffer);
@@ -65,9 +66,9 @@ class ofApp : public ofBaseApp, public PdReceiver, public PdMidiReceiver {
 
 		double noise;
 
-		double rotationSpeed;  // 回転速度を設定
-		double currentAngle;   // 初期の回転角度を設定
-		// double angle;
-
-		ofBoxPrimitive box;
+		ofEasyCam cam;  // カメラを使うための変数
+		ofBoxPrimitive box;  // ボックスを描画するための変数
+		float rotationSpeed;  // ボックスの回転速度
+		float currentAngle;  // 現在の回転角度
+		ofColor boxColor;  // ボックスの色
 };

@@ -253,6 +253,10 @@ void ofApp::setup() {
 	box.set(100);
     rotationSpeed = 1.0f;  // 回転速度を設定
     currentAngle = 0.0f;   // 初期の回転角度を設定
+    boxColor = ofColor(255, 0, 0);  // ボックスの初期色を赤に設定
+
+    cam.setNearClip(0.1f);  // カメラの近くのクリッピング距離を設定
+    cam.setFarClip(5000.0f); // カメラの遠くのクリッピング距離を設定
 }
 
 //--------------------------------------------------------------
@@ -279,6 +283,7 @@ void ofApp::update() {
 	// pd.sendNoteOn(midiChan, pitch);
 
     currentAngle += rotationSpeed*noise;  // 回転角度を更新
+    box.setOrientation(glm::vec3(currentAngle, currentAngle, 0));  // ボックスを回転
 }
 
 //--------------------------------------------------------------
@@ -294,12 +299,17 @@ void ofApp::draw() {
 		x += w;
 	}
 
-    ofPushMatrix();
-    ofTranslate(ofGetWidth() / 2, noise*ofGetHeight()/4.0, 0);  // 画面の中心に移動
-    ofRotateDeg(currentAngle, 1.0, 1.0, 0.0);  // 回転させる。軸はxとyの方向に設定
-    // box.drawWireframe();  // ワイヤーフレームでボックスを描画
-    box.draw();  // ワイヤーフレームでボックスを描画
-    ofPopMatrix();
+    // ofPushMatrix();
+    // ofTranslate(ofGetWidth() / 2, noise*ofGetHeight()/4.0, 0);  // 画面の中心に移動
+    // ofRotateDeg(currentAngle, 1.0, 1.0, 0.0);  // 回転させる。軸はxとyの方向に設定
+    // // box.drawWireframe();  // ワイヤーフレームでボックスを描画
+    // box.draw();  // ワイヤーフレームでボックスを描画
+    // ofPopMatrix();
+
+    cam.begin();  // カメラの操作開始
+    ofSetColor(boxColor);  // ボックスの色を設定
+    box.draw();  // ボックスを描画
+    cam.end();  // カメラの操作終了
 }
 
 //--------------------------------------------------------------
@@ -376,6 +386,20 @@ void ofApp::keyPressed (int key) {
 		default:
 			break;
 	}
+}
+
+void ofApp::mousePressed(int x, int y, int button){
+    // カメラ座標系でボックスの位置を取得
+    glm::vec3 boxPosition = cam.worldToScreen(box.getPosition());
+
+    // マウス位置とボックスのスクリーン上の位置を比較して、簡易衝突判定
+    if (x > boxPosition.x - box.getWidth() / 2 && x < boxPosition.x + box.getWidth() / 2 &&
+        y > boxPosition.y - box.getHeight() / 2 && y < boxPosition.y + box.getHeight() / 2) {
+
+        boxColor = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));  // ランダムな色に変更
+		playTone(72);
+
+    }
 }
 
 //--------------------------------------------------------------
