@@ -133,30 +133,30 @@ void ofApp::setup() {
 
 	// std::cout << "FINISH Message Test" << std::endl;
 
-	// -----------------------------------------------------
-	std::cout << std::endl << "BEGIN MIDI Test" << std::endl;
+	// // -----------------------------------------------------
+	// std::cout << std::endl << "BEGIN MIDI Test" << std::endl;
 
-	// send functions
-	pd.sendNoteOn(midiChan, 60);
-	pd.sendControlChange(midiChan, 0, 64);
-	pd.sendProgramChange(midiChan, 100); // note: pgm num range is 1 - 128
-	pd.sendPitchBend(midiChan, 2000);    // note: ofxPd uses -8192 - 8192 while [bendin] returns 0 - 16383,
-										 // so sending a val of 2000 gives 10192 in pd
-	pd.sendAftertouch(midiChan, 100);
-	pd.sendPolyAftertouch(midiChan, 64, 100);
-	pd.sendMidiByte(0, 239);    // note: pd adds +2 to the port number from [midiin], [sysexin], & [realtimein]
-	pd.sendSysex(0, 239);       // so sending to port 0 gives port 2 in pd
-	pd.sendSysRealTime(0, 239);
+	// // send functions
+	// pd.sendNoteOn(midiChan, 60);
+	// pd.sendControlChange(midiChan, 0, 64);
+	// pd.sendProgramChange(midiChan, 100); // note: pgm num range is 1 - 128
+	// pd.sendPitchBend(midiChan, 2000);    // note: ofxPd uses -8192 - 8192 while [bendin] returns 0 - 16383,
+	// 									 // so sending a val of 2000 gives 10192 in pd
+	// pd.sendAftertouch(midiChan, 100);
+	// pd.sendPolyAftertouch(midiChan, 64, 100);
+	// pd.sendMidiByte(0, 239);    // note: pd adds +2 to the port number from [midiin], [sysexin], & [realtimein]
+	// pd.sendSysex(0, 239);       // so sending to port 0 gives port 2 in pd
+	// pd.sendSysRealTime(0, 239);
 
-	// stream
-	pd << NoteOn(midiChan, 60) << ControlChange(midiChan, 100, 64)
-	   << ProgramChange(midiChan, 100) << PitchBend(midiChan, 2000)
-	   << Aftertouch(midiChan, 100) << PolyAftertouch(midiChan, 64, 100)
-	   << StartMidi(0) << 239 << Finish()
-	   << StartSysex(0) << 239 << Finish()
-	   << StartSysRealTime(0) << 239 << Finish();
+	// // stream
+	// pd << NoteOn(midiChan, 60) << ControlChange(midiChan, 100, 64)
+	//    << ProgramChange(midiChan, 100) << PitchBend(midiChan, 2000)
+	//    << Aftertouch(midiChan, 100) << PolyAftertouch(midiChan, 64, 100)
+	//    << StartMidi(0) << 239 << Finish()
+	//    << StartSysex(0) << 239 << Finish()
+	//    << StartSysRealTime(0) << 239 << Finish();
 
-	std::cout << "FINISH MIDI Test" << std::endl;
+	// std::cout << "FINISH MIDI Test" << std::endl;
 
 	// -----------------------------------------------------
 	// std::cout << std::endl << "BEGIN Array Test" << std::endl;
@@ -241,14 +241,14 @@ void ofApp::setup() {
 
 	// std::cout << "FINISH Instance Test" << std::endl;
 
-	// -----------------------------------------------------
-	// play a tone by sending a list
-	// [list tone pitch 72 (
-	pd.startMessage();
-	pd.addSymbol("pitch");
-	pd.addFloat(72);
-	pd.finishList("tone");
-	pd.sendBang("tone");
+	// // -----------------------------------------------------
+	// // play a tone by sending a list
+	// // [list tone pitch 72 (
+	// pd.startMessage();
+	// pd.addSymbol("pitch");
+	// pd.addFloat(72);
+	// pd.finishList("tone");
+	// pd.sendBang("tone");
 
 	box.set(100);
     rotationSpeed = 1.0f;  // 回転速度を設定
@@ -272,9 +272,11 @@ void ofApp::update() {
 
 	// send MIDI note by setting noise
 	auto now = ofGetCurrentTime();
+
 	noise = 2.0*ofNoise(now.getAsSeconds())+1.0; // normarized to 0 - 2 value
-	double pitch = noise*60;
-	pd.sendNoteOn(midiChan, pitch);
+
+	// double pitch = noise*60;
+	// pd.sendNoteOn(midiChan, pitch);
 
     currentAngle += rotationSpeed*noise;  // 回転角度を更新
 }
@@ -295,7 +297,8 @@ void ofApp::draw() {
     ofPushMatrix();
     ofTranslate(ofGetWidth() / 2, noise*ofGetHeight()/4.0, 0);  // 画面の中心に移動
     ofRotateDeg(currentAngle, 1.0, 1.0, 0.0);  // 回転させる。軸はxとyの方向に設定
-    box.drawWireframe();  // ワイヤーフレームでボックスを描画
+    // box.drawWireframe();  // ワイヤーフレームでボックスを描画
+    box.draw();  // ワイヤーフレームでボックスを描画
     ofPopMatrix();
 }
 
